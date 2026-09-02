@@ -7,6 +7,8 @@ services:
     ports:
       - "9092:9092"
       - "9101:9101"
+    volumes:
+      - broker-data:/var/lib/kafka/data
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -29,7 +31,7 @@ services:
       KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
       # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid"
@@ -56,6 +58,8 @@ services:
     ports:
       - "9094:9094"
       - "9102:9102"
+    volumes:
+      - broker-2-data:/var/lib/kafka/data
     environment:
       KAFKA_NODE_ID: 2
 
@@ -72,7 +76,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
 
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
 
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
 
@@ -113,6 +117,8 @@ services:
     ports:
       - "9096:9096"
       - "9103:9103"
+    volumes:
+      - broker-3-data:/var/lib/kafka/data
     environment:
       KAFKA_NODE_ID: 3
 
@@ -129,7 +135,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
 
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
 
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
 
@@ -364,6 +370,9 @@ services:
       retries: 10
 
 volumes:
+  broker-data:
+  broker-2-data:
+  broker-3-data:
   postgres-source-data:
   postgres-target-data:
 
