@@ -1,0 +1,38 @@
+{
+  "name": "postgres-cdc-source",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+
+    "database.hostname": "postgres-source",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "CHANGE_ME",
+    "database.dbname": "source_db",
+
+    "topic.prefix": "pg_source",
+    "schema.include.list": "public",
+    "table.include.list": "public.customers",
+
+    "plugin.name": "pgoutput",
+    "slot.name": "customers_cdc_slot",
+    "publication.name": "customers_cdc_publication",
+    "publication.autocreate.mode": "filtered",
+
+    "snapshot.mode": "initial",
+    "tombstones.on.delete": "true",
+
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.delete.tombstone.handling.mode": "tombstone",
+    "transforms.unwrap.add.fields": "op,source.ts_ms",
+
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
+
+    "topic.creation.default.partitions": "3",
+    "topic.creation.default.replication.factor": "3"
+  }
+}

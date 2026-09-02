@@ -1,0 +1,24 @@
+# Environment and credentials
+.env
+*.local.json
+
+# PostgreSQL/Kafka data
+data/
+vol/
+logs/
+*.log
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary files
+*.tmp
+*.swp
