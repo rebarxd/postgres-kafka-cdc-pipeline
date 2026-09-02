@@ -344,6 +344,7 @@ services:
       TZ: Asia/Jakarta
     volumes:
       - postgres-source-data:/var/lib/postgresql/data
+      - ./postgres/source-init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d source_db"]
       interval: 10s
